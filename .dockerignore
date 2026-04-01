@@ -1,0 +1,6 @@
+.git
+data/
+.env
+.env.*
+.DS_Store
+README.md
