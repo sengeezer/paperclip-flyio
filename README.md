@@ -61,6 +61,10 @@ cp fly.toml paperclip/ && cp docker-entrypoint.sh paperclip/scripts/ && fly depl
 After the first deploy, SSH into the machine to initialize Paperclip and create the admin account:
 
 ```bash
+# Run these commands from this repo directory (or pass `--config /path/to/fly.toml`).
+# `flyctl` reads `./fly.toml` from your current working directory, even for
+# commands like `fly ssh console`.
+#
 # 1. Run onboard to generate the config file and auth secrets.
 #    Use --yes to accept defaults. When it offers to start the server, say no —
 #    the container's main process is already running.
@@ -68,7 +72,7 @@ After the first deploy, SSH into the machine to initialize Paperclip and create 
 # Run these commands as node so files are created with the right ownership.
 # You may have to ctrl-c out of the booted server which it seems to do automatically
 # at the moment but we don't need a server because it's already running on this machine
-fly ssh console --app my-paperclip -C "su node - bash -c 'pnpm paperclipai onboard'"
+fly ssh console --app my-paperclip -C "su node - bash -c 'pnpm paperclipai onboard --yes'"
 
 # 2. (check output of above for a first admin URL or) Generate the first admin invite URL.
 fly ssh console --app my-paperclip -C "su node - bash -c 'pnpm paperclipai auth bootstrap-ceo'"
